@@ -1,0 +1,20 @@
+{
+  "name": "gh-create-release-action",
+  "private": true,
+  "description": "Create or update a GitHub release, upload assets, and publish it in one safe step.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test 'test/**/*.test.ts'",
+    "coverage": "npm run build && node --test --experimental-test-coverage --test-coverage-include='src/**' --test-coverage-lines=90 --test-coverage-branches=85 --test-coverage-functions=90 'test/**/*.test.ts'"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
+  }
+}

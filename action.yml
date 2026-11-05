@@ -1,0 +1,59 @@
+name: Create GitHub Release
+description: Create or update a GitHub release, upload assets, and publish it in one safe step.
+author: CruxStack
+branding:
+  icon: package
+  color: blue
+
+# Inputs that an update may change have no `default:` so unset values are left untouched.
+inputs:
+  github-token:
+    description: Token with `contents:write` on the repository.
+    default: ${{ github.token }}
+  github-repository:
+    description: Repository to release, as `owner/name`.
+    default: ${{ github.repository }}
+  release-tag:
+    description: Tag of the release.
+    required: true
+  release-name:
+    description: Release title. Defaults to the tag.
+  release-target:
+    description: Commit SHA or branch to tag. Only used, and required, when the tag does not exist yet.
+  release-body:
+    description: Release notes.
+  release-body-file:
+    description: Workspace file containing the release notes.
+  release-notes-generate:
+    description: Append GitHub's generated release notes after the body.
+    default: "false"
+  release-notes-previous-tag:
+    description: Tag the generated notes start from. Defaults to GitHub's choice.
+  release-draft:
+    description: Leave the release as a draft. Defaults to false.
+  release-prerelease:
+    description: Mark the release as a prerelease. Defaults to false.
+  release-latest:
+    description: Mark the release as latest (true, false or legacy). Defaults to true.
+  release-if-exists:
+    description: What to do when a release for the tag exists (fail, skip or update).
+    default: fail
+  release-assets:
+    description: Workspace glob patterns of files to upload, one per line.
+  release-assets-overwrite:
+    description: Replace existing assets with the same name.
+    default: "false"
+
+outputs:
+  release-id:
+    description: Release ID.
+  release-url:
+    description: Release page URL.
+  release-operation:
+    description: created, updated or skipped.
+  release-assets:
+    description: JSON array of `{name, url, size}` for assets uploaded by this run.
+
+runs:
+  using: node24
+  main: dist/main.js
